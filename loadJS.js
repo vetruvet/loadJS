@@ -7,7 +7,18 @@ function loadJS( src, cb ){
 	script.async = true;
 	ref.parentNode.insertBefore( script, ref );
 	if (cb && typeof(cb) === "function") {
-		script.onload = cb;
+		done = false;
+		
+		//from jQuery.getScript
+		script.onload = script.onreadystatechange = function() {
+			if (!done && (!this.readyState || this.readyState == 'loaded' || this.readyState == 'complete')) {
+				done = true;
+				
+				cb();
+				script.onload = script.onreadystatechange = null;
+			};
+		
+		};
 	}
 	return script;
 }

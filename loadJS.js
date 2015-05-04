@@ -7,7 +7,7 @@ function loadJS( src, cb ){
 	script.async = true;
 	ref.parentNode.insertBefore( script, ref );
 	if (cb && typeof(cb) === "function") {
-		done = false;
+		var done = false;
 		
 		//from jQuery.getScript
 		script.onload = script.onreadystatechange = function() {
